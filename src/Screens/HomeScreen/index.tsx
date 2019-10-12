@@ -16,12 +16,21 @@ export default class HomeScreen extends Component {
     }).start();
   };
 
+  handleButtonPress = () => {
+    const socket = new WebSocket('https://192.168.43.178:3000');
+    socket.onopen = () => {
+      console.warn('opened');
+    // socket.send('gimmie love');
+    };
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <AnimatedButton
           label="Connect To Server"
           style={{width: this.animatedValue}}
+          onPress={this.handleButtonPress}
         />
       </SafeAreaView>
     );

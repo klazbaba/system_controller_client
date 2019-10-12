@@ -14,7 +14,7 @@ export default class CustomButton extends Component<Props> {
     const {style, label} = this.props;
 
     return (
-      <Button style={[styles.wrapper, style]}>
+      <Button {...this.props} style={[styles.wrapper, style]}>
         <Text style={styles.label}>{label}</Text>
       </Button>
     );

@@ -12,5 +12,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 32,
     backgroundColor: colors.green,
+    shadowOffset: {height: 24, width: 8},
+    shadowColor: colors.lightgrey,
+    shadowOpacity: 0.5,
   },
 });
