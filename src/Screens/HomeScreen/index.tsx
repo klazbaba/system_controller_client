@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {SafeAreaView, Animated} from 'react-native';
+import net from 'react-native-tcp';
 
 import {styles} from './styles';
 import CustomButton from '../_Components/CustomButton';
@@ -7,6 +8,13 @@ import CustomButton from '../_Components/CustomButton';
 const AnimatedButton = Animated.createAnimatedComponent(CustomButton);
 
 export default class HomeScreen extends Component {
+  chatter: any[];
+
+  constructor(props) {
+    super(props);
+    this.chatter = [];
+  }
+
   animatedValue = new Animated.Value(100);
 
   componentDidMount = () => {
@@ -17,11 +25,9 @@ export default class HomeScreen extends Component {
   };
 
   handleButtonPress = () => {
-    const socket = new WebSocket('https://192.168.43.178:3000');
-    socket.onopen = () => {
-      console.warn('opened');
-    // socket.send('gimmie love');
-    };
+    const socket = net.createConnection('3000', '192.168.43.178', () =>
+      socket.write('Running...'),
+    );
   };
 
   render() {
