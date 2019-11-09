@@ -46,7 +46,7 @@ export default class HomeScreen extends Component<Props, State> {
             navigate('ControlScreen');
           }
         }),
-          socket.on('error', error => Toast.show({text: error}));
+          socket.on('error', (error: any) => Toast.show({text: error}));
       });
     } catch (error) {
       console.warn(error);

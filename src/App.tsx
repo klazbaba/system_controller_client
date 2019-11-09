@@ -18,15 +18,10 @@ import HomeScreen from './Screens/HomeScreen';
 import ControlScreen from './Screens/ControlScreen';
 
 useScreens();
-const mainStack = createStackNavigator(
-  {
-    HomeScreen,
-    ControlScreen,
-  },
-  {
-    headerMode: 'none',
-  },
-);
+const mainStack = createStackNavigator({
+  HomeScreen: {screen: HomeScreen, navigationOptions: {header: null}},
+  ControlScreen,
+});
 
 const Routes = createAppContainer(mainStack);
 
