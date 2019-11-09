@@ -11,9 +11,13 @@ interface State {
   isConnected: boolean;
 }
 
+interface Props {
+  navigation: {navigate: (string) => void};
+}
+
 const AnimatedButton = Animated.createAnimatedComponent(CustomButton);
 
-export default class HomeScreen extends Component<null, State> {
+export default class HomeScreen extends Component<Props, State> {
   chatter: any[];
 
   constructor(props) {
@@ -33,11 +37,14 @@ export default class HomeScreen extends Component<null, State> {
   };
 
   handleButtonPress = () => {
+    const {navigate} = this.props.navigation;
     try {
       const socket = net.createConnection('3000', '192.168.43.178', () => {
         socket.on('data', data => {
-          if (data.toString().trim() === 'connected')
+          if (data.toString().trim() === 'connected') {
             this.setState({isConnected: true});
+            navigate('ControlScreen');
+          }
         }),
           socket.on('error', error => Toast.show({text: error}));
       });

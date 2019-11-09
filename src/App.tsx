@@ -15,11 +15,13 @@ import {createAppContainer} from 'react-navigation';
 import {Root} from 'native-base';
 
 import HomeScreen from './Screens/HomeScreen';
+import ControlScreen from './Screens/ControlScreen';
 
 useScreens();
 const mainStack = createStackNavigator(
   {
     HomeScreen,
+    ControlScreen,
   },
   {
     headerMode: 'none',
