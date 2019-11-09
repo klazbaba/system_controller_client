@@ -223,6 +223,8 @@ PODS:
     - React
   - RNScreens (2.0.0-alpha.3):
     - React
+  - TcpSockets (3.3.2):
+    - React
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -256,6 +258,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - TcpSockets (from `../node_modules/react-native-tcp`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -317,6 +320,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  TcpSockets:
+    :path: "../node_modules/react-native-tcp"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -349,6 +354,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
   RNScreens: 402a99b0a27c0c32f079cec12d3ccbd35e20cd7f
+  TcpSockets: 14306fb79f9750ea7d2ddd02d8bed182abb01797
   Yoga: d8c572ddec8d05b7dba08e4e5f1924004a177078
 
 PODFILE CHECKSUM: 8ac2d10981824c6db8ec887f08143abd7cf35005
