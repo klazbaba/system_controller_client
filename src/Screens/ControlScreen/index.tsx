@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {View} from 'react-native';
+import {SafeAreaView} from 'react-native';
+import {Icon} from 'native-base';
 
 import {styles} from './styles';
 import CustomText from '../_Components/CustomText';
@@ -7,9 +8,10 @@ import CustomText from '../_Components/CustomText';
 export default class ControlScreen extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <Icon name="poweroff" type="AntDesign" />
         <CustomText text="Control Screen" />
-      </View>
+      </SafeAreaView>
     );
   }
 }
