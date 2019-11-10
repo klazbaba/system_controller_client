@@ -16,7 +16,6 @@ import {Root} from 'native-base';
 
 import HomeScreen from './Screens/HomeScreen';
 import ControlScreen from './Screens/ControlScreen';
-import {colors} from './colors';
 
 useScreens();
 const mainStack = createStackNavigator({
