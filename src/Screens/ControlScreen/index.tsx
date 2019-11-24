@@ -10,6 +10,7 @@ import {Icon} from 'native-base';
 import {styles} from './styles';
 import CustomText from '../_Components/CustomText';
 import {colors} from '../../colors';
+import {SocketContext} from '../HomeScreen';
 
 export default class ControlScreen extends Component {
   animatedValue: Animated.Value;
@@ -17,6 +18,7 @@ export default class ControlScreen extends Component {
   constructor(props) {
     super(props);
     this.animatedValue = new Animated.Value(0);
+    console.warn(props.navigation.getParam('socket'));
   }
 
   animateBackgroundColor = () => {
@@ -26,6 +28,10 @@ export default class ControlScreen extends Component {
     }).start();
   };
 
+  handleShutDown = () => {
+    this.animateBackgroundColor();
+  };
+
   render() {
     const colorConfig = this.animatedValue.interpolate({
       inputRange: [0, 1],
@@ -33,20 +39,28 @@ export default class ControlScreen extends Component {
     });
 
     return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView horizontal>
-          <TouchableWithoutFeedback onPress={this.animateBackgroundColor}>
-            <Animated.View
-              style={[
-                styles.actionButtonWrapper,
-                {backgroundColor: colorConfig},
-              ]}>
-              <Icon name="power-off" type="FontAwesome5" style={styles.icon} />
-              <CustomText text="Shut down" />
-            </Animated.View>
-          </TouchableWithoutFeedback>
-        </ScrollView>
-      </SafeAreaView>
+      <SocketContext.Consumer>
+        {socket => (
+          <SafeAreaView style={styles.container}>
+            <ScrollView horizontal>
+              <TouchableWithoutFeedback onPress={this.handleShutDown}>
+                <Animated.View
+                  style={[
+                    styles.actionButtonWrapper,
+                    {backgroundColor: colorConfig},
+                  ]}>
+                  <Icon
+                    name="power-off"
+                    type="FontAwesome5"
+                    style={styles.icon}
+                  />
+                  <CustomText text="Shut Down" style={styles.shutDownText} />
+                </Animated.View>
+              </TouchableWithoutFeedback>
+            </ScrollView>
+          </SafeAreaView>
+        )}
+      </SocketContext.Consumer>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, createContext} from 'react';
 import {SafeAreaView, Animated} from 'react-native';
 import net from 'react-native-tcp';
 import {Toast} from 'native-base';
@@ -12,19 +12,22 @@ interface State {
 }
 
 interface Props {
-  navigation: {navigate: (string) => void};
+  navigation: {navigate: (screen: string, params?: object) => void};
 }
 
 const AnimatedButton = Animated.createAnimatedComponent(CustomButton);
+export const SocketContext = createContext('glass house');
 
 export default class HomeScreen extends Component<Props, State> {
   chatter: any[];
+  socket: any;
 
   constructor(props) {
     super(props);
     this.state = {
       isConnected: false,
     };
+    this.socket = 'mama latica';
   }
 
   animatedValue = new Animated.Value(100);
@@ -39,14 +42,14 @@ export default class HomeScreen extends Component<Props, State> {
   handleButtonPress = () => {
     const {navigate} = this.props.navigation;
     try {
-      const socket = net.createConnection('3000', '192.168.43.178', () => {
-        socket.on('data', data => {
+      this.socket = net.createConnection('3000', '192.168.43.178', () => {
+        this.socket.on('data', data => {
           if (data.toString().trim() === 'connected') {
             this.setState({isConnected: true});
-            navigate('ControlScreen');
+            navigate('ControlScreen', {socket: this.socket});
           }
         }),
-          socket.on('error', (error: any) => Toast.show({text: error}));
+          this.socket.on('error', (error: any) => Toast.show({text: error}));
       });
     } catch (error) {
       console.warn(error);
@@ -57,17 +60,21 @@ export default class HomeScreen extends Component<Props, State> {
     const {isConnected} = this.state;
 
     return (
-      <SafeAreaView style={styles.container}>
-        <AnimatedButton
-          label={!isConnected ? 'Connect To Server' : 'Disconnect From Server'}
-          style={{
-            width: this.animatedValue,
-            backgroundColor: isConnected ? colors.red : colors.green,
-          }}
-          onPress={this.handleButtonPress}
-          labelStyle={styles.buttonLabel}
-        />
-      </SafeAreaView>
+      <SocketContext.Provider value={this.socket}>
+        <SafeAreaView style={styles.container}>
+          <AnimatedButton
+            label={
+              !isConnected ? 'Connect To Server' : 'Disconnect From Server'
+            }
+            style={{
+              width: this.animatedValue,
+              backgroundColor: isConnected ? colors.red : colors.green,
+            }}
+            onPress={this.handleButtonPress}
+            labelStyle={styles.buttonLabel}
+          />
+        </SafeAreaView>
+      </SocketContext.Provider>
     );
   }
 }

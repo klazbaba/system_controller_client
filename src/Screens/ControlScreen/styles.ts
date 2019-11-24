@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
   },
   icon: {
     color: colors.red,
-    position: 'absolute',
   },
   actionButtonWrapper: {
     borderWidth: 0.5,
@@ -18,5 +17,9 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     minWidth: 70,
     marginHorizontal: 8,
+    padding: 8,
+  },
+  shutDownText: {
+    color: colors.black,
   },
 });
