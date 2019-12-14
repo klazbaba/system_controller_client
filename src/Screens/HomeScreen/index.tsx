@@ -27,7 +27,7 @@ export default class HomeScreen extends Component<Props, State> {
     this.state = {
       isConnected: false,
     };
-    this.socket = 'mama latica';
+    this.socket = null;
   }
 
   animatedValue = new Animated.Value(100);
@@ -60,21 +60,17 @@ export default class HomeScreen extends Component<Props, State> {
     const {isConnected} = this.state;
 
     return (
-      <SocketContext.Provider value={this.socket}>
-        <SafeAreaView style={styles.container}>
-          <AnimatedButton
-            label={
-              !isConnected ? 'Connect To Server' : 'Disconnect From Server'
-            }
-            style={{
-              width: this.animatedValue,
-              backgroundColor: isConnected ? colors.red : colors.green,
-            }}
-            onPress={this.handleButtonPress}
-            labelStyle={styles.buttonLabel}
-          />
-        </SafeAreaView>
-      </SocketContext.Provider>
+      <SafeAreaView style={styles.container}>
+        <AnimatedButton
+          label={!isConnected ? 'Connect To Server' : 'Disconnect From Server'}
+          style={{
+            width: this.animatedValue,
+            backgroundColor: isConnected ? colors.red : colors.green,
+          }}
+          onPress={this.handleButtonPress}
+          labelStyle={styles.buttonLabel}
+        />
+      </SafeAreaView>
     );
   }
 }
