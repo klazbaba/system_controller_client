@@ -1,7 +1,6 @@
 import React, {Component, createContext} from 'react';
 import {SafeAreaView, Animated} from 'react-native';
 import net from 'react-native-tcp';
-import {Toast} from 'native-base';
 
 import {styles} from './styles';
 import CustomButton from '../_Components/CustomButton';
@@ -15,19 +14,15 @@ interface Props {
   navigation: {navigate: (screen: string, params?: object) => void};
 }
 
+export let SocketContext;
 const AnimatedButton = Animated.createAnimatedComponent(CustomButton);
-export const SocketContext = createContext('glass house');
 
 export default class HomeScreen extends Component<Props, State> {
-  chatter: any[];
-  socket: any;
-
   constructor(props) {
     super(props);
     this.state = {
       isConnected: false,
     };
-    this.socket = null;
   }
 
   animatedValue = new Animated.Value(100);
@@ -41,19 +36,14 @@ export default class HomeScreen extends Component<Props, State> {
 
   handleButtonPress = () => {
     const {navigate} = this.props.navigation;
-    try {
-      this.socket = net.createConnection('3000', '192.168.43.178', () => {
-        this.socket.on('data', data => {
-          if (data.toString().trim() === 'connected') {
-            this.setState({isConnected: true});
-            navigate('ControlScreen', {socket: this.socket});
-          }
-        }),
-          this.socket.on('error', (error: any) => Toast.show({text: error}));
+    const socket = net.createConnection('3000', '192.168.43.178', () => {
+      socket.on('data', data => {
+        if (data.toString().trim() === 'connected') {
+          SocketContext = createContext(socket);
+          navigate('ControlScreen');
+        }
       });
-    } catch (error) {
-      console.warn(error);
-    }
+    });
   };
 
   render() {

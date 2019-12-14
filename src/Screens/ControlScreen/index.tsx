@@ -36,10 +36,16 @@ export default class ControlScreen extends Component<Props> {
   handleShutDown = () => {
     const {getParam} = this.props.navigation;
     this.animateBackgroundColor();
-    // let socket = getParam('socket');
+    let socket = getParam('socket');
+    console.warn(JSON.stringify(Object.keys(socket), null, 10));
+    console.warn(JSON.stringify(socket._state));
+
     // socket = JSON.parse(socket);
-    // socket.write('shutdown');
-    Animated.timing(this.animatedOpacity, {toValue: 0, duration: 1000}).start();
+    socket.write('shutdown');
+    Animated.timing(this.animatedOpacity, {
+      toValue: 0,
+      duration: 1000,
+    }).start();
   };
 
   render() {
