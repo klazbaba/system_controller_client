@@ -1,4 +1,4 @@
-import React, {Component, createContext} from 'react';
+import React, {Component} from 'react';
 import {SafeAreaView, Animated} from 'react-native';
 
 import {styles} from './styles';
@@ -37,9 +37,8 @@ export default class HomeScreen extends Component<Props, State> {
   handleButtonPress = () => {
     const {navigate} = this.props.navigation;
     connectToServer();
-    socket.on('data', () => {
-      socket.write('one love');
-      navigate('ControlScreen');
+    socket.on('data', data => {
+      if (data.toString().trim() === 'connected') navigate('ControlScreen');
     });
   };
 
