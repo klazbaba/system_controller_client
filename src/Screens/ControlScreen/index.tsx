@@ -10,6 +10,7 @@ import {Icon} from 'native-base';
 import {styles} from './styles';
 import CustomText from '../_Components/CustomText';
 import {colors} from '../../colors';
+import {socket} from '../../utils/functions/Socket';
 
 interface Props {
   navigation: any;
@@ -17,7 +18,6 @@ interface Props {
 
 export default class ControlScreen extends Component<Props> {
   animatedValue: Animated.Value;
-  AnimatedIcon: any;
   animatedOpacity: Animated.Value;
 
   constructor(props) {
@@ -34,14 +34,8 @@ export default class ControlScreen extends Component<Props> {
   };
 
   handleShutDown = () => {
-    const {getParam} = this.props.navigation;
     this.animateBackgroundColor();
-    let socket = getParam('socket');
-    console.warn(JSON.stringify(Object.keys(socket), null, 10));
-    console.warn(JSON.stringify(socket._state));
-
-    // socket = JSON.parse(socket);
-    socket.write('shutdown');
+    socket.on('data', () => socket.write('shutdown'));
     Animated.timing(this.animatedOpacity, {
       toValue: 0,
       duration: 1000,
